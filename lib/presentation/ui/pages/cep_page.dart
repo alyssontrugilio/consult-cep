@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../main/main.dart';
 import '../../bloc/bloc.dart';
+import '../widgets/widgets.dart';
 
 class CepPage extends StatefulWidget {
   const CepPage({
@@ -38,40 +39,53 @@ class _CepPageState extends State<CepPage> {
       body: BlocProvider<CepBloc>.value(
         value: cepBloc,
         child: Center(
-          child: Column(
-            children: [
-              TextField(
-                decoration: const InputDecoration(hintText: 'Informe o CEP'),
-                onChanged: (value) {
-                  cepBloc.add(
-                    CepEvent.cepChanged(value: value),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  cepBloc.add(
-                    const CepEvent.submitted(),
-                  );
-                },
-                child: const Text('Consultar'),
-              ),
-              const SizedBox(height: 30),
-              BlocBuilder<CepBloc, CepState>(
-                buildWhen: (p, c) => p.failureOrSuccess != c.failureOrSuccess,
-                builder: (context, state) {
-                  return Card(
-                    elevation: 3,
-                    child: Column(
-                      children: [
-                        Text('CEP: ${state.cep.cep}'),
-                      ],
-                    ),
-                  );
-                },
-              )
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Informe o CEP',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    cepBloc.add(
+                      CepEvent.cepChanged(value: value),
+                    );
+                  },
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return BlocProvider<CepBloc>.value(
+                          value: cepBloc,
+                          child: BlocBuilder<CepBloc, CepState>(
+                            buildWhen: (p, c) =>
+                                p.failureOrSuccess != c.failureOrSuccess,
+                            builder: (context, state) {
+                              return ModalResultWidget(
+                                state: state,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                    cepBloc.add(
+                      const CepEvent.submitted(),
+                    );
+                  },
+                  child: const Text('Consultar'),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
