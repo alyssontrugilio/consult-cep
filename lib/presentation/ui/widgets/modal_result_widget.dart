@@ -13,43 +13,36 @@ class ModalResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formBloc = context.read<CepBloc>();
-    return AlertDialog(
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Fechar',
+    return formBloc.state.isLoading == true
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : AlertDialog(
+            actions: [
+              FilledButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Fechar'),
               ),
+            ],
+            title: const Text('Resultado da consulta'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('CEP: ${formBloc.state.cep.cep}'),
+                Text('Logradouro: ${formBloc.state.cep.logradouro}'),
+                Text('Complemento: ${formBloc.state.cep.complemento}'),
+                Text('Bairro: ${formBloc.state.cep.bairro}'),
+                Text('Localidade: ${formBloc.state.cep.localidade}'),
+                Text('UF: ${formBloc.state.cep.uf}'),
+                Text('IBGE: ${formBloc.state.cep.ibge}'),
+                Text('GIA: ${formBloc.state.cep.gia}'),
+                Text('DDD: ${formBloc.state.cep.ddd}'),
+                Text('SIAFI: ${formBloc.state.cep.siafi}'),
+              ],
             ),
-            FilledButton(
-              onPressed: () {},
-              child: const Text('Fechar'),
-            ),
-          ],
-        )
-      ],
-      title: const Text('Resultado da consulta'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('CEP: ${formBloc.state.cep.cep}'),
-          Text('Logradouro: ${formBloc.state.cep.logradouro}'),
-          Text('Complemento: ${formBloc.state.cep.complemento}'),
-          Text('Bairro: ${formBloc.state.cep.bairro}'),
-          Text('Localidade: ${formBloc.state.cep.localidade}'),
-          Text('UF: ${formBloc.state.cep.uf}'),
-          Text('IBGE: ${formBloc.state.cep.ibge}'),
-          Text('GIA: ${formBloc.state.cep.gia}'),
-          Text('DDD: ${formBloc.state.cep.ddd}'),
-          Text('SIAFI: ${formBloc.state.cep.siafi}'),
-        ],
-      ),
-    );
+          );
   }
 }
