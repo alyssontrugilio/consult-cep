@@ -60,6 +60,7 @@ class _CepPageState extends State<CepPage> {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
+                    if (cepBloc.state.searchField.isEmpty) return;
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -67,6 +68,7 @@ class _CepPageState extends State<CepPage> {
                           value: cepBloc,
                           child: BlocBuilder<CepBloc, CepState>(
                             buildWhen: (p, c) =>
+                                p.isLoading != c.isLoading ||
                                 p.failureOrSuccess != c.failureOrSuccess,
                             builder: (context, state) {
                               return ModalResultWidget(
