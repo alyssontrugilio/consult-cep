@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import '../presentation/presentation.dart';
@@ -8,14 +9,18 @@ class AppWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // ignore: deprecated_member_use
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Consulta CEP',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.lightBlue,
+          seedColor: const Color(0xff2563eb),
         ),
         useMaterial3: true,
       ),
-      home: const CepPage(),
+      home: const LoginPage(),
     );
   }
 }

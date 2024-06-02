@@ -1,7 +1,12 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'core/core.dart';
 
 void main() {
-  runApp(const AppWidgets());
+  runApp(
+    DevicePreview(
+      builder: (context) => const AppWidgets(), // Wrap your app
+    ),
+  );
 }
