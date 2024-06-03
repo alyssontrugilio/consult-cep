@@ -61,24 +61,7 @@ class _CepPageState extends State<CepPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (cepBloc.state.searchField.isEmpty) return;
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return BlocProvider<CepBloc>.value(
-                          value: cepBloc,
-                          child: BlocBuilder<CepBloc, CepState>(
-                            buildWhen: (p, c) =>
-                                p.isLoading != c.isLoading ||
-                                p.failureOrSuccess != c.failureOrSuccess,
-                            builder: (context, state) {
-                              return ModalResultWidget(
-                                state: state,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    );
+                    showModalResult(context);
                     cepBloc.add(
                       const CepEvent.submitted(),
                     );
@@ -91,6 +74,27 @@ class _CepPageState extends State<CepPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> showModalResult(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return BlocProvider<CepBloc>.value(
+          value: cepBloc,
+          child: BlocBuilder<CepBloc, CepState>(
+            buildWhen: (p, c) =>
+                p.isLoading != c.isLoading ||
+                p.failureOrSuccess != c.failureOrSuccess,
+            builder: (context, state) {
+              return ModalResultWidget(
+                state: state,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
