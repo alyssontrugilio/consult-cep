@@ -16,7 +16,7 @@ class AppWidgets extends StatelessWidget {
       title: 'Consulta CEP',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff2563eb),
+          seedColor: const Color.fromARGB(255, 37, 156, 235),
         ),
         useMaterial3: true,
       ),
