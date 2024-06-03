@@ -6,8 +6,8 @@ import '../../bloc/bloc.dart';
 class ModalResultWidget extends StatelessWidget {
   final CepState state;
   const ModalResultWidget({
-    super.key,
     required this.state,
+    super.key,
   });
 
   @override
