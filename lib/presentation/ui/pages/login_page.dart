@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
                   FilledButton(
                     style: const ButtonStyle(
                       backgroundColor:
-                          WidgetStatePropertyAll(Color(0xff2563EB)),
+                          MaterialStatePropertyAll(Color(0xff2563EB)),
                     ),
                     onPressed: () {},
                     child: const Text('Login'),
