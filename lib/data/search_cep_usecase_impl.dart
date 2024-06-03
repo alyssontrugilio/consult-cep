@@ -17,8 +17,8 @@ class SearchCepUseCaseImpl implements SearchCepUseCase {
     final response = await repository.search(cep: cep);
 
     return response.fold(
-      (failure) => left(failure),
-      (success) {
+      left,
+      (success) async {
         return right(success);
       },
     );
